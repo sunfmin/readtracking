@@ -2,9 +2,11 @@ from django.conf.urls.defaults import *
 
 urlpatterns = patterns('',
     # Example:
+    (r'^contents/(?P<id>\d+)/q/(?P<word>[a-zA-Z]+)', 'contents.views.quest'),
     (r'^contents/create', 'contents.views.create'),
     (r'^contents/new', 'contents.views.new'),
     (r'^contents/(?P<id>\d+)', 'contents.views.show'),
+    (r'^words/(?P<id>\d+)', 'contents.views.word'),
     (r'^contents/', 'contents.views.index'),
     (r'^/?$', 'contents.views.index'),
 
