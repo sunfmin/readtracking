@@ -4,10 +4,12 @@ from contents.models import *
 import string
 
 def index(request):
-    return HttpResponse("Hello, Google App Engine with Django")
+    contents = Content.all().fetch(100)
+    return render_to_response('index.html', {"contents": contents})
 
 def new(request):
-    return render_to_response('contents/new.html', {})
+    return render_to_response('new.html', {})
+
 
 def create(request):
     content_url = request.POST['content_url']
@@ -23,4 +25,4 @@ def create(request):
 
 def show(request, id):
     content = Content.get_by_id(int(id))
-    return render_to_response('contents/show.html', {"content": content})
+    return render_to_response('show.html', {"content": content})

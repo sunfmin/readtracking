@@ -17,3 +17,6 @@ class Content(db.Model):
         )
         content.put()
         return content
+
+    def excerpt(self):
+        return ""
