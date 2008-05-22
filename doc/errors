@@ -1,0 +1,94 @@
+== First startup dev_appserver.py ==
+
+Felix:~/Developments/readtracking sunfmin$ dev_appserver.py .
+Traceback (most recent call last):
+  File "/Users/sunfmin/Developments/google_appengine/dev_appserver.py", line 50, in <module>
+    execfile(script_path, globals())
+  File "/Users/sunfmin/Developments/google_appengine/google/appengine/tools/dev_appserver_main.py", line 343, in <module>
+    sys.exit(main(sys.argv))
+  File "/Users/sunfmin/Developments/google_appengine/google/appengine/tools/dev_appserver_main.py", line 302, in main
+    server = MakeRpcServer(option_dict)
+  File "/Users/sunfmin/Developments/google_appengine/google/appengine/tools/dev_appserver_main.py", line 264, in MakeRpcServer
+    host_override=option_dict[ARG_ADMIN_CONSOLE_HOST])
+  File "/Users/sunfmin/Developments/google_appengine/google/appengine/tools/appcfg.py", line 122, in __init__
+    self.opener = self._GetOpener()
+  File "/Users/sunfmin/Developments/google_appengine/google/appengine/tools/appcfg.py", line 334, in _GetOpener
+    opener.add_handler(urllib2.HTTPSHandler())
+AttributeError: 'module' object has no attribute 'HTTPSHandler'
+
+http://electricsheep.blogspot.com/2008/05/google-app-engine-finally-working-under.html
+Google App Engine Finally Working under MacPorts
+Well, it took some fidgeting but I finally got Google App Engine 1.0.2 SDK working under MacPorts by first uninstalling my previous version of Python 2.5 and then re-installing with the socket-ssl package.
+
+>> sudo port uninstall python25
+>> sudo port install python25
+---> Activating python25 2.5.1_1+darwin_8
+---> Cleaning python25
+>> sudo port install py25-socket-ssl
+---> Fetching py25-socket-ssl
+---> Verifying checksum(s) for py25-socket-ssl
+---> Extracting py25-socket-ssl
+---> Configuring py25-socket-ssl
+---> Building py25-socket-ssl with target build
+---> Staging py25-socket-ssl into destroot
+---> Installing py25-socket-ssl 2.5.1_0
+---> Activating py25-socket-ssl 2.5.1_0
+---> Cleaning py25-socket-ssl
+
+Before I installed py25-socket-ssl, I would get the error:
+
+File "/usr/local/google_appengine/google/appengine/tools/appcfg.py", line 334, in _GetOpener
+opener.add_handler(urllib2.HTTPSHandler())
+AttributeError: 'module' object has no attribute 'HTTPSHandler'
+
+Hope this helps someone else out there.
+
+Now to actually see if this has been worth all the hassle. ;-)
+
+
+== Second Try ==
+
+Felix:~/Developments/readtracking sunfmin$ dev_appserver.py .
+Traceback (most recent call last):
+  File "/Users/sunfmin/Developments/google_appengine/dev_appserver.py", line 50, in <module>
+    execfile(script_path, globals())
+  File "/Users/sunfmin/Developments/google_appengine/google/appengine/tools/dev_appserver_main.py", line 72, in <module>
+    from google.appengine.tools import appcfg
+  File "/Users/sunfmin/Developments/google_appengine/google/appengine/tools/appcfg.py", line 40, in <module>
+    import sha
+  File "/opt/local/lib/python2.5/sha.py", line 6, in <module>
+    from hashlib import sha1 as sha
+  File "/opt/local/lib/python2.5/hashlib.py", line 133, in <module>
+    md5 = __get_builtin_constructor('md5')
+  File "/opt/local/lib/python2.5/hashlib.py", line 60, in __get_builtin_constructor
+    import _md5
+ImportError: No module named _md5
+
+
+Felix:~/Developments sunfmin$ sudo port install py25-hashlib   
+--->  Fetching py25-hashlib
+--->  Verifying checksum(s) for py25-hashlib
+--->  Extracting py25-hashlib
+--->  Configuring py25-hashlib
+--->  Building py25-hashlib with target build
+--->  Staging py25-hashlib into destroot
+--->  Installing py25-hashlib 2.5.2_0
+--->  Activating py25-hashlib 2.5.2_0
+--->  Cleaning py25-hashlib
+
+== Finally got running ==
+Felix:~/Developments/readtracking sunfmin$ dev_appserver.py .
+INFO     2008-05-22 03:31:17,312 appcfg.py] Server: appengine.google.com
+Allow dev_appserver to check for updates on startup? (Y/n): Y
+dev_appserver will check for updates on startup.  To change this setting, edit /Users/sunfmin/.appcfg_nag
+INFO     2008-05-22 03:31:22,073 appcfg.py] Checking for updates to the SDK.
+INFO     2008-05-22 03:31:22,579 appcfg.py] The SDK is up to date.
+WARNING  2008-05-22 03:31:22,580 datastore_file_stub.py] Could not read datastore data from /tmp/dev_appserver.datastore
+WARNING  2008-05-22 03:31:22,580 datastore_file_stub.py] Could not read datastore data from /tmp/dev_appserver.datastore.history
+INFO     2008-05-22 03:31:22,624 dev_appserver_main.py] Running application readtracking on port 8080: http://localhost:8080
+
+
+
+
+
+
