@@ -4,6 +4,7 @@ from google.appengine.api import users
 
 from string import *
 
+
 DICTIONARIES = (
     Template("http://eow.alc.co.jp/${word}/UTF-8/"),
     Template("http://www.excite.co.jp/dictionary/english_japanese/?search=${word}&match=beginswith&dictionary=NEW_EJJE&block=38659&offset=254&title=${word}"),
@@ -46,9 +47,10 @@ class Content(db.Model):
         contents = Content.all().filter('url =', content_url).fetch(1)
 
         if len(contents) == 0:
+            
             content = Content(
                 url = url,
-                text = db.Text(urlfetch.fetch(url).content.decode('utf-8')),
+                text = db.Text(Stripper.strip_remote(url)),
                 explained_word = word,
                 creator=users.get_current_user()
             )
@@ -86,5 +88,32 @@ class Quest(db.Model):
             quest = quests[0]
         return quest
 
+from urlparse import urlparse
+from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
+import re
 
+  
+
+class Stripper(db.Model):
+    domain = db.StringProperty()
+    url_path_regexp = db.StringProperty()
+    priority = db.IntegerProperty()
+    selector_xpath = db.StringProperty()
+    creator = db.UserProperty()
+    created_at = db.DateTimeProperty(auto_now_add=True)
+    @classmethod
+    def strip_remote(cls, url):
+        """docstring for strip_remote"""
+        url_o = urlparse(url)
+        domain = url_o.scheme + "://" + url_o.netloc
+        path = replace(url, domain, "")
+        
+        fetched_content = urlfetch.fetch(url).content #.decode('utf-8')
+        clean_xhtml = BeautifulStoneSoup(fetched_content).prettify()
+         
+        strippers = Stripper.all().filter('domain = ', domain).order("-priority").fetch(100)
+        for stripper in strippers:
+            if re.compile(stripper.url_path_regexp).match(path):
+                return clean_xhtml
+        return clean_xhtml
 
