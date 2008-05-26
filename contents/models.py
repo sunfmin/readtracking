@@ -89,7 +89,7 @@ class Quest(db.Model):
         return quest
 
 from urlparse import urlparse
-from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
+# from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 import re
 
   
@@ -98,7 +98,7 @@ class Stripper(db.Model):
     domain = db.StringProperty()
     url_path_regexp = db.StringProperty()
     priority = db.IntegerProperty()
-    selector_xpath = db.StringProperty()
+    jquery_selector = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     @classmethod
@@ -109,11 +109,11 @@ class Stripper(db.Model):
         path = replace(url, domain, "")
         
         fetched_content = urlfetch.fetch(url).content #.decode('utf-8')
-        clean_xhtml = BeautifulStoneSoup(fetched_content).prettify()
-         
+        # clean_xhtml = BeautifulStoneSoup(fetched_content).prettify()
+        
         strippers = Stripper.all().filter('domain = ', domain).order("-priority").fetch(100)
         for stripper in strippers:
             if re.compile(stripper.url_path_regexp).match(path):
-                return clean_xhtml
-        return clean_xhtml
+                return fetched_content
+        return fetched_content
 
