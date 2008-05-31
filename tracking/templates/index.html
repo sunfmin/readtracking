@@ -1,8 +1,10 @@
 {% extends "main.html" %}
 
 {% block content %}
-
 {% load helper %}
+
+<h2>My Recent Words</h2>
+
 <ol>
 {% for quest in quests %}
     <li>
@@ -10,6 +12,8 @@
     </li>
 {% endfor %}
 </ol>
+
+<a href="/dicts">My Dictionaries</a>
 
 
 <div class="toobar">

@@ -1,12 +1,15 @@
 w=window,d=document,e=encodeURIComponent,url=location.href;
 
-var txt='';
-if (w.getSelection)
-	txt = w.getSelection();
-else if (d.getSelection)
-	txt = d.getSelection();
-else if (d.selection)
-	txt = d.selection.createRange().text;
+var selectedWord = function(){
+    var txt='';
+    if (w.getSelection)
+    	txt = w.getSelection();
+    else if (d.getSelection)
+    	txt = d.getSelection();
+    else if (d.selection)
+    	txt = d.selection.createRange().text;
+    return txt;
+}
 
 //making wraper
 wrpr=d.createElement('div');
@@ -93,7 +96,7 @@ with (ifrm) {
 	style.height='560px';
 	style.borderWidth='0';
 	style.margin="0px";
-	src='http://localhost:8080/ask?url='+e(url)+'&title='+e(d.title)+'&q='+e(txt);
+	src='http://readtracking.appspot.com/ask?url='+e(url)+'&title='+e(d.title)+'&q='+e(selectedWord());
 }
 
 

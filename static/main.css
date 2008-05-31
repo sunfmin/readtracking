@@ -9,3 +9,17 @@ body {
     
 }
 
+.add_dicts {
+    font-size: 14px;
+}
+
+.add_dicts .field label {
+    display: block;
+    width: 120px;
+    
+}
+
+.add_dicts .field input {
+    width: 360px;
+}
+

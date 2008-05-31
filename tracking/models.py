@@ -3,6 +3,7 @@ from google.appengine.api import urlfetch
 from google.appengine.api import users
 
 from string import *
+from datetime import datetime
 
 
 class Word(db.Model):
@@ -15,7 +16,7 @@ class Word(db.Model):
         if not word_name or len(strip(word_name)) == 0:
             return None
         # word_name = lower(word_name)
-        from_content = Content.put_with_url(url, title=title)
+        from_content = Content.put_with_url(url=url, title=title)
         words = Word.all().filter('name =', word_name).fetch(1)
 
         if len(words) == 0:
@@ -38,12 +39,11 @@ class Content(db.Model):
     created_at = db.DateTimeProperty(auto_now_add=True)
 
     @classmethod
-    def put_with_url(cls, url, word=None, title=None):
-        content_url = rstrip(url, "/")
-        contents = Content.all().filter('url =', content_url).fetch(1)
+    def put_with_url(cls, url=None, word=None, title=None):
+        url = rstrip(url, "/")
+        contents = Content.all().filter('url =', url).fetch(1)
 
         if len(contents) == 0:
-            
             content = Content(
                 url = url,
                 title = title,
@@ -62,6 +62,8 @@ class Quest(db.Model):
     word = db.ReferenceProperty(Word)
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
+    updated_at = db.DateTimeProperty(auto_now_add=True)
+    search_count = db.IntegerProperty()
     
     @classmethod
     def put_with_word_and_content(cls, word=None, content=None):
@@ -81,21 +83,88 @@ class Quest(db.Model):
             quest.put()
         else:
             quest = quests[0]
-        return quest
         
+        quest.updated_at = datetime.now()
+        if not quest.search_count:
+            quest.search_count = 1
+        else:
+            quest.search_count = quest.search_count + 1
+        quest.put()
+        
+        return quest
+
 class Dictionary(db.Model):
     title = db.StringProperty()
     url_template = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
+
+    @classmethod
+    def put_with_url_template(cls, url_template=None, title=None):
+        url_template = rstrip(url_template, "/")
+        dicts = Dictionary.all().filter('url_template =', url_template).fetch(1)
+
+        if len(dicts) == 0:
+            dictionary = Dictionary(
+                url_template = url_template,
+                title = title,
+                creator=users.get_current_user()
+            )
+            dictionary.put()
+        else:
+            dictionary = dicts[0]
+        return dictionary
     
     @classmethod
+    def public_dictionaries(self):
+        return Dictionary.all().fetch(100)
+
+
+    @classmethod
     def my_dictionaries(cls):
-        alc = Dictionary(url_template="http://eow.alc.co.jp/${word}/UTF-8/",
-                         title="ALC")
-        goo = Dictionary(url_template="http://dictionary.goo.ne.jp/search.php?MT=${word}&kind=all&mode=0&kwassist=0",
-                          title="Goo")
-        return [goo, alc]
+        mydics = MyDictionary.all().filter('creator =', users.get_current_user()).fetch(100)
+        return mydics
+
+        # alc = Dictionary(url_template="http://eow.alc.co.jp/${word}/UTF-8/",
+        #                  title="ALC")
+        # goo = Dictionary(url_template="http://dictionary.goo.ne.jp/search.php?MT=${word}&kind=all&mode=0&kwassist=0",
+        #                   title="Goo")
+        # return [goo, alc]
+
+
+class MyDictionary(db.Model):
+    dictionary = db.ReferenceProperty(Dictionary)
+    creator = db.UserProperty()
+    created_at = db.DateTimeProperty(auto_now_add=True)
+
+    @classmethod
+    def add_my_dic(cls, url_template=None, title=None, dic_id=None):
+        if not dic_id and (not url_template or not strip(url_template)):
+            return None
+        if not dic_id:
+            dic = Dictionary.put_with_url_template(url_template=url_template, title=title)
+        else:
+            dic = Dictionary.get_by_id(int(dic_id))
+        if not dic:
+            return None
+        
+        creator = users.get_current_user()
+        mydicsq = MyDictionary.all()
+        mydicsq.filter('dictionary = ', dic)
+        mydicsq.filter('creator = ', creator)
+        mydics = mydicsq.fetch(1)
+        
+        if len(mydics) == 0:
+            mydic = MyDictionary(
+                dictionary = dic,
+                creator=creator
+            )
+            mydic.put()
+        else:
+            mydic = mydics[0]
+        return mydic
+
+
 
 # 
 # from urlparse import urlparse

@@ -14,10 +14,10 @@ def show_word(quest):
     return quest.word.name
 
 def dictionaries_json(word):
-    dics = Dictionary.my_dictionaries()
+    mydics = Dictionary.my_dictionaries()
     result = []
-    for dic in dics:
-        result.append({'title': dic.title, 'url': Template(dic.url_template).substitute(word=word.name)})
+    for mydic in mydics:
+        result.append({'title': mydic.dictionary.title, 'url': Template(mydic.dictionary.url_template).substitute(word=word.name)})
     return simplejson.dumps(result)
 
 def greeting(any):

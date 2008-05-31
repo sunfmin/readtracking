@@ -10,7 +10,14 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 45 times in query history.
+# Used 7 times in query history.
+- kind: Quest
+  properties:
+  - name: creator
+  - name: updated_at
+    direction: desc
+
+# Unused in query history -- copied from input.
 - kind: Stripper
   properties:
   - name: domain

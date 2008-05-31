@@ -1,0 +1,39 @@
+{% extends "main.html" %}
+
+{% block content %}
+{% load helper %}
+
+<div class="add_dicts">
+    <form action="/dicts" method="post" accept-charset="utf-8">
+        <div class="field">
+        <label>Title: </label><input type="text" value="" name="title">
+        </div>
+        <div class="field">
+        <label>URL Template:</label><input type="text" value="" name="url_template"> Example: http://eow.alc.co.jp/${word}/UTF-8/
+        </div>
+        <input type="submit" value="Create">
+    </form>
+</div>
+
+
+<h2>My Dictionaries</h2>
+<ol>
+{% for mydic in my_dictionaries %}
+    <li>
+       {{mydic.dictionary.title}}({{mydic.dictionary.url_template}})
+       <a href="/mydics/remove/{{mydic|url_id}}">Remove</a>
+    </li>
+{% endfor %}
+</ol>
+
+<h2>Public Dictionaries</h2>
+<ol>
+{% for dic in dictionaries %}
+    <li>
+       {{dic.title}}({{dic.url_template}})
+       <a href="/mydics/add/{{dic|url_id}}">Add to mydic</a>
+    </li>
+{% endfor %}
+</ol>
+
+{% endblock %}
