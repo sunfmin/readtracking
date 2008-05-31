@@ -5,18 +5,17 @@ from google.appengine.api import users
 from string import *
 
 
-DICTIONARIES = (
-    Template("http://eow.alc.co.jp/${word}/UTF-8/"),
-    Template("http://www.excite.co.jp/dictionary/english_japanese/?search=${word}&match=beginswith&dictionary=NEW_EJJE&block=38659&offset=254&title=${word}"),
-)
-
 class Word(db.Model):
     name = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
 
     @classmethod
-    def quest(cls, word_name, from_content):
+    def quest(cls, url=None, word_name=None, title=None):
+        if not word_name or len(strip(word_name)) == 0:
+            return None
+        # word_name = lower(word_name)
+        from_content = Content.put_with_url(url, title=title)
         words = Word.all().filter('name =', word_name).fetch(1)
 
         if len(words) == 0:
@@ -28,21 +27,18 @@ class Word(db.Model):
         else:
             word = words[0]
 
-        for url_template in DICTIONARIES:
-            content = Content.put_with_url(url_template.substitute(word=word_name), word)
-            quest = Quest.put_with_word_and_content(content=from_content, word=word)
-
+        Quest.put_with_word_and_content(word=word, content=from_content)
         return word
 
 class Content(db.Model):
     text = db.TextProperty()
     url = db.StringProperty()
-    explained_word = db.ReferenceProperty(Word)
+    title = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
 
     @classmethod
-    def put_with_url(cls, url, word=None):
+    def put_with_url(cls, url, word=None, title=None):
         content_url = rstrip(url, "/")
         contents = Content.all().filter('url =', content_url).fetch(1)
 
@@ -50,8 +46,7 @@ class Content(db.Model):
             
             content = Content(
                 url = url,
-                text = db.Text(Stripper.strip_remote(url)),
-                explained_word = word,
+                title = title,
                 creator=users.get_current_user()
             )
             content.put()
@@ -69,7 +64,7 @@ class Quest(db.Model):
     created_at = db.DateTimeProperty(auto_now_add=True)
     
     @classmethod
-    def put_with_word_and_content(cls, word, content):
+    def put_with_word_and_content(cls, word=None, content=None):
         creator = users.get_current_user()
         quests_query = Quest.all()
         quests_query.filter('word = ', word)
@@ -87,33 +82,47 @@ class Quest(db.Model):
         else:
             quest = quests[0]
         return quest
-
-from urlparse import urlparse
-# from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
-import re
-
-  
-
-class Stripper(db.Model):
-    domain = db.StringProperty()
-    url_path_regexp = db.StringProperty()
-    priority = db.IntegerProperty()
-    jquery_selector = db.StringProperty()
+        
+class Dictionary(db.Model):
+    title = db.StringProperty()
+    url_template = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
+    
     @classmethod
-    def strip_remote(cls, url):
-        """docstring for strip_remote"""
-        url_o = urlparse(url)
-        domain = url_o.scheme + "://" + url_o.netloc
-        path = replace(url, domain, "")
-        
-        fetched_content = urlfetch.fetch(url).content #.decode('utf-8')
-        # clean_xhtml = BeautifulStoneSoup(fetched_content).prettify()
-        
-        strippers = Stripper.all().filter('domain = ', domain).order("-priority").fetch(100)
-        for stripper in strippers:
-            if re.compile(stripper.url_path_regexp).match(path):
-                return fetched_content
-        return fetched_content
+    def my_dictionaries(cls):
+        alc = Dictionary(url_template="http://eow.alc.co.jp/${word}/UTF-8/",
+                         title="ALC")
+        goo = Dictionary(url_template="http://dictionary.goo.ne.jp/search.php?MT=${word}&kind=all&mode=0&kwassist=0",
+                          title="Goo")
+        return [goo, alc]
+
+# 
+# from urlparse import urlparse
+# # from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
+# import re
+# 
+#   
+# 
+# class Stripper(db.Model):
+#     domain = db.StringProperty()
+#     url_path_regexp = db.StringProperty()
+#     priority = db.IntegerProperty()
+#     jquery_selector = db.StringProperty()
+#     creator = db.UserProperty()
+#     created_at = db.DateTimeProperty(auto_now_add=True)
+#     @classmethod
+#     def strip_remote(cls, url):
+#         url_o = urlparse(url)
+#         domain = url_o.scheme + "://" + url_o.netloc
+#         path = replace(url, domain, "")
+#         
+#         fetched_content = urlfetch.fetch(url).content.decode('utf-8')
+#         # clean_xhtml = BeautifulStoneSoup(fetched_content).prettify()
+#         
+#         strippers = Stripper.all().filter('domain = ', domain).order("-priority").fetch(100)
+#         for stripper in strippers:
+#             if re.compile(stripper.url_path_regexp).match(path):
+#                 return fetched_content
+#         return fetched_content
 

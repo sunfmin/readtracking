@@ -13,7 +13,7 @@ INSTALLED_APPS = (
     'django.contrib.contenttypes',
 #    'django.contrib.sessions',
     'django.contrib.sites',
-    'contents',
+    'tracking',
 )
 
 ROOT_PATH = os.path.dirname(__file__)

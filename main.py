@@ -2,6 +2,8 @@ import logging, os, sys
 
 # Google App Engine imports.
 from google.appengine.ext.webapp import util
+from google.appengine.api import users
+from google.appengine.ext import webapp
 
 # Remove the standard version of Django.
 for k in [k for k in sys.modules if k.startswith('django')]:
@@ -31,8 +33,9 @@ django.dispatch.dispatcher.disconnect(
     django.db._rollback_on_exception,
     django.core.signals.got_request_exception)
 
+
+
 def main():
-  # Create a Django application for WSGI.
   application = django.core.handlers.wsgi.WSGIHandler()
 
   # Run the WSGI CGI handler with that application.

@@ -1,0 +1,18 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+{% if word %}
+{% load helper %}
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    readtracking.loadDictionaryIframes({{word|dictionaries_json|safe}});
+})
+</script>
+
+
+{% else %}
+No such word
+{% endif %}
+{% endblock %}

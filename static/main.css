@@ -1,4 +1,11 @@
 body {
+    font-family: "Courier New";
 /*  background: #DDD;*/
+}
+
+.greeting {
+    text-align: right;
+    font-size: 12px;
+    
 }
 

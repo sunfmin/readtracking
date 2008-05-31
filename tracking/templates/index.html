@@ -1,0 +1,27 @@
+{% extends "main.html" %}
+
+{% block content %}
+
+{% load helper %}
+<ol>
+{% for quest in quests %}
+    <li>
+       <a href="{{quest.content.url}}">{{quest.word.name}}</a>
+    </li>
+{% endfor %}
+</ol>
+
+
+<div class="toobar">
+    Put this to your browser toolbar, 
+<a href="javascript:(function(){var%20w=window,d=document,e=encodeURIComponent,url=location.href,fff=d.getElementsByTagName('body')[0],wra=window.readtracking_ask;if(url!=''&&url!='about:blank'){if(wra){fff.removeChild(wra);}var%20s=d.createElement('script');window.readtracking_ask=s;s.src='http://readtracking.appspot.com/loader.js';fff.appendChild(s);}}());">Dic</a>
+</div>
+
+
+{% endblock %}
+
+
+
+
+
+
