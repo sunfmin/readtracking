@@ -1,0 +1,22 @@
+{% extends "main.html" %}
+
+{% block content %}
+{% load helper %}
+
+<a href="/">Home</a>/<a href="/dicts">Dictionaries</a>/<a href="/dicts/update_order">Update Order</a>
+
+<h2>Update My Dictionaries order, Largest number goes top</h2>
+<ol>
+{% for mydic in my_dictionaries %}
+    <li>
+       <form action="/dicts/update_order/{{mydic|url_id}}" method="post" accept-charset="utf-8">
+           <input type="text" name="order_priority" size="2" value="{{mydic.order_priority}}">
+           <input type="submit" value="Update">
+           {{mydic.dictionary.title}}({{mydic.dictionary.url_template}})
+       </form>
+    </li>
+{% endfor %}
+</ol>
+
+
+{% endblock %}

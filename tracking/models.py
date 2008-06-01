@@ -124,7 +124,7 @@ class Dictionary(db.Model):
 
     @classmethod
     def my_dictionaries(cls):
-        mydics = MyDictionary.all().filter('creator =', users.get_current_user()).fetch(100)
+        mydics = MyDictionary.all().filter('creator =', users.get_current_user()).order("-order_priority").fetch(100)
         return mydics
 
         # alc = Dictionary(url_template="http://eow.alc.co.jp/${word}/UTF-8/",
@@ -138,6 +138,7 @@ class MyDictionary(db.Model):
     dictionary = db.ReferenceProperty(Dictionary)
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
+    order_priority = db.IntegerProperty()
 
     @classmethod
     def add_my_dic(cls, url_template=None, title=None, dic_id=None):
@@ -149,7 +150,7 @@ class MyDictionary(db.Model):
             dic = Dictionary.get_by_id(int(dic_id))
         if not dic:
             return None
-        
+
         creator = users.get_current_user()
         mydicsq = MyDictionary.all()
         mydicsq.filter('dictionary = ', dic)
@@ -159,7 +160,8 @@ class MyDictionary(db.Model):
         if len(mydics) == 0:
             mydic = MyDictionary(
                 dictionary = dic,
-                creator=creator
+                creator=creator,
+                order_priority = 0
             )
             mydic.put()
         else:

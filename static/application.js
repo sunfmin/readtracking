@@ -11,6 +11,7 @@ readtracking.loadDictionaryIframes = function(dics_json) {
         $("body").append(a);
         buttons.push(a);
     });
+    $("body").append("<a href='http://readtracking.appspot.com/dicts' target='_blank' class='manage_buttons'>Add or delete buttons</a>");
     
     height = 500;
     if(window.innerHeight) {
