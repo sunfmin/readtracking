@@ -17,8 +17,8 @@ def index(request):
 
 @login_required
 def ask(request):
-    word = Word.quest(url=request.GET['url'], word_name=request.GET['q'], title=request.GET['title'])
-    return render_to_response('word.html', {"word": word, "dictionaries": Dictionary.my_dictionaries()})
+    quest = Word.quest(url=request.GET['url'], word_name=request.GET['q'], title=request.GET['title'])
+    return render_to_response('word.html', {"quest": quest, "dictionaries": Dictionary.my_dictionaries()})
 
 def dicts(request):
     if request.method == 'POST':

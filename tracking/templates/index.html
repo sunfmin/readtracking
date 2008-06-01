@@ -7,9 +7,11 @@
 
 <ol>
 {% for quest in quests %}
+    {% if quest.word %}
     <li>
        <a href="{{quest.content.url}}">{{quest.word.name}}</a>
     </li>
+    {% endif %}
 {% endfor %}
 </ol>
 

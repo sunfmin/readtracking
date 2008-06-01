@@ -2,17 +2,14 @@
 
 {% block content %}
 
-{% if word %}
+{% if quest %}
 {% load helper %}
 
 <script type="text/javascript" charset="utf-8">
-$(document).ready(function(){
-    readtracking.loadDictionaryIframes({{word|dictionaries_json|safe}});
-})
+readtracking.loadDictionaryIframes({{quest|dictionaries_json|safe}});
 </script>
 
-
 {% else %}
-No such word
+You have to select something to search.
 {% endif %}
 {% endblock %}

@@ -1,4 +1,9 @@
+(function(){
+
+
+var loadReadTracking = function(){
 w=window,d=document,e=encodeURIComponent,url=location.href;
+b=d.getElementsByTagName('body')[0];
 
 var selectedWord = function(){
     var txt='';
@@ -11,42 +16,49 @@ var selectedWord = function(){
     return txt;
 }
 
+var ask_url = 'http://readtracking.appspot.com/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
+if(window.readtracking_ask_iframe_container){
+    b.removeChild(window.readtracking_ask_iframe_container);
+}
+
+height = 580;
+if(w.innerHeight) {
+    height = w.innerHeight - 10;
+}
 //making wraper
 wrpr=d.createElement('div');
-with (wrpr) {
-	id='wrapper_readtracking';
-	style.zIndex='10000000';
-	style.position='fixed';
-	style.top='0';
-	style.right='0';
-	style.lineHeight='20px';
-	style.width='800px';
-	style.height='580px';
-	style.margin="0px";
-	style.textAlign='left';
-	style.background='#f6f5ee';
-	wrpr.style.border='2px solid #ababab';
-	wrpr.style.borderTopWidth='1px';
-	wrpr.style.borderRightWidth='1px';
-}
+wrpr.style.zIndex='10000000';
+wrpr.style.position='fixed';
+wrpr.style.top='5';
+wrpr.style.right='0';
+wrpr.style.lineHeight='20px';
+wrpr.style.width='600px';
+wrpr.style.height= (height + 'px');
+wrpr.style.margin="0px";
+wrpr.style.textAlign='left';
+wrpr.style.background='#f6f5ee';
+wrpr.style.border='1px solid #CCCCCC';
+wrpr.style.borderTopWidth='1px';
+wrpr.style.borderRightWidth='1px';
+wrpr.style.fontFamily = 'Courier New';
+window.readtracking_ask_iframe_container = wrpr;
+
 
 //making close button
 butt=d.createElement('input');
 with (butt) {
-	id='butt_close_readtracking';
-	type='button';
-	value='Close';
-	style.clear='both';
-	style.float ="left";
-	style.cssFloat ="left";
-	style.styleFloat ="left";
+    type='button';
+    value='Close';
+    style.clear='both';
     style.width='100px';
     style.margin='0px';
     style.padding='2px';
     style.color='#5f758b';
     style.fontSize='12px';
     style.background=' #e1e1e1';
-    style.border='1px solid #7f9db9';
+    style.border="0"
+    style.borderRight='1px solid #CCCCCC';
+    style.borderBottom='1px solid #CCCCCC';
 }
 
 
@@ -86,24 +98,47 @@ butt.onclick=function() {
 	wrpr.style.display = 'none';
 };
 
+random_key =  (Math.random() + "").replace('.', '');
+
 //making iframe
 ifrm=d.createElement('iframe');
-with (ifrm) {
-	name='iframe_readtracking';
-	id='iframe_readtracking';
-	scrolling='no';
-	style.width='800px';
-	style.height='560px';
-	style.borderWidth='0';
-	style.margin="0px";
-	src='http://readtracking.appspot.com/ask?url='+e(url)+'&title='+e(d.title)+'&q='+e(selectedWord());
-}
+ifrm.id="readtracking_iframe_" + random_key
+ifrm.scrolling='no';
+ifrm.style.display='block';
+ifrm.style.width='600px';
+ifrm.style.height=(height - 20) + 'px';
+ifrm.style.borderWidth='0';
+ifrm.style.margin="0";
+ifrm.src=ask_url;
 
-
-
-//adding elements in document
-d.getElementsByTagName('body')[0].appendChild(wrpr);
+b.appendChild(wrpr);
 wrpr.appendChild(butt);
 wrpr.appendChild(logo);
 wrpr.appendChild(ifrm);
+}
+
+// var keydown_handler = function(e){
+//     if(e.keyCode == 27){
+//         wrpr = window.readtracking_ask_iframe_container;
+//         if(!wrpr) {
+//             return;
+//         }
+//         if(wrpr.style.display == 'none') {
+//             loadReadTracking();
+//         } else {
+//             b=document.getElementsByTagName('body')[0];
+//             b.removeChild(wrpr)
+//             window.readtracking_ask_iframe_container = null;
+//         }
+//     }
+//     window.focus();
+// }
+
+
+loadReadTracking()
+// window.onkeydown = keydown_handler
+
+
+
+})();
 

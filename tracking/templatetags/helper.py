@@ -13,11 +13,22 @@ def url_id(model):
 def show_word(quest):
     return quest.word.name
 
-def dictionaries_json(word):
+def dictionaries_json(quest):
     mydics = Dictionary.my_dictionaries()
     result = []
     for mydic in mydics:
-        result.append({'title': mydic.dictionary.title, 'url': Template(mydic.dictionary.url_template).substitute(word=word.name)})
+        url_t = Template(mydic.dictionary.url_template)
+        wordname = None
+        if quest.word:
+            wordname = quest.word.name
+        try:
+            url = url_t.substitute(url=quest.content.url, title=quest.content.title)
+        except KeyError:
+            if not wordname:
+                continue
+            url = url_t.substitute(word=wordname, url=quest.content.url, title=quest.content.title)
+
+        result.append({'title': mydic.dictionary.title, 'url': url})
     return simplejson.dumps(result)
 
 def greeting(any):

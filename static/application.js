@@ -2,10 +2,8 @@ var readtracking = new Object()
 
 readtracking.loadDictionaryIframes = function(dics_json) {
     d = document;
-    
     buttons = [];
     iframes = [];
-    
     jQuery.each(dics_json, function() {
         a = d.createElement('input');
         a.type='button';
@@ -14,11 +12,16 @@ readtracking.loadDictionaryIframes = function(dics_json) {
         buttons.push(a);
     });
     
+    height = 500;
+    if(window.innerHeight) {
+        height = window.innerHeight - 60;
+    }
+    
     for (var i=0; i < dics_json.length; i++) {
         ifrm=d.createElement('iframe');
         ifrm.scrolling='auto';
         ifrm.style.width='100%';
-        ifrm.style.height= '500px';
+        ifrm.style.height= (height + 'px');
         ifrm.src=dics_json[i].url
         ifrm.style.display="none";
         $("body").append(ifrm);

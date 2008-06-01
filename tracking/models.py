@@ -13,23 +13,25 @@ class Word(db.Model):
 
     @classmethod
     def quest(cls, url=None, word_name=None, title=None):
-        if not word_name or len(strip(word_name)) == 0:
-            return None
+
         # word_name = lower(word_name)
         from_content = Content.put_with_url(url=url, title=title)
-        words = Word.all().filter('name =', word_name).fetch(1)
-
-        if len(words) == 0:
-            word = Word(
-                name = word_name,
-                creator=users.get_current_user()
-            )
-            word.put()
+        
+        if not word_name or len(strip(word_name)) == 0:
+            word = None
         else:
-            word = words[0]
+            words = Word.all().filter('name =', word_name).fetch(1)
+            if len(words) == 0:
+                word = Word(
+                    name = word_name,
+                    creator=users.get_current_user()
+                )
+                word.put()
+            else:
+                word = words[0]
 
-        Quest.put_with_word_and_content(word=word, content=from_content)
-        return word
+        quest = Quest.put_with_word_and_content(word=word, content=from_content)
+        return quest
 
 class Content(db.Model):
     text = db.TextProperty()
