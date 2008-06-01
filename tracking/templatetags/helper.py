@@ -34,11 +34,11 @@ def dictionaries_json(quest):
 def greeting(any):
     user = users.get_current_user()
     if user:
-      greeting = ("Welcome, %s! (<a href=\"%s\">sign out</a>)" %
+      greeting = ("Welcome, %s! (<a href=\"%s\">sign out</a>) or to <a href='/myhome'>My Home</a>" %
                   (user.nickname(), users.create_logout_url("/")))
     else:
       greeting = ("<a href=\"%s\">Sign in or register</a>." %
-                  users.create_login_url("/my"))
+                  users.create_login_url("/myhome"))
     return greeting
 
 

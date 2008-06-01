@@ -11,9 +11,9 @@ def login_required(func, request=None):
     return decorate
 
 @login_required
-def my(request):
+def myhome(request):
     quests = Quest.all().filter("creator = ", users.get_current_user()).order("-updated_at").fetch(100)
-    return render_to_response('my.html', {"quests": quests})
+    return render_to_response('myhome.html', {"quests": quests})
 
 @login_required
 def ask(request):
