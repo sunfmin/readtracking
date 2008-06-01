@@ -6,7 +6,9 @@
 {% load helper %}
 
 <script type="text/javascript" charset="utf-8">
-readtracking.loadDictionaryIframes({{quest|dictionaries_json|safe}});
+$(document).ready(function(){
+    readtracking.loadDictionaryIframes({{quest|dictionaries_json|safe}});
+})
 </script>
 
 {% else %}

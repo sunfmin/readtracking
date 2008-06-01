@@ -29,7 +29,7 @@ if(w.innerHeight) {
 wrpr=d.createElement('div');
 wrpr.style.zIndex='10000000';
 wrpr.style.position='fixed';
-wrpr.style.top='5';
+wrpr.style.top='0';
 wrpr.style.right='0';
 wrpr.style.lineHeight='20px';
 wrpr.style.width='600px';
