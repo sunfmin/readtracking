@@ -38,7 +38,7 @@ def greeting(any):
                   (user.nickname(), users.create_logout_url("/")))
     else:
       greeting = ("<a href=\"%s\">Sign in or register</a>." %
-                  users.create_login_url("/"))
+                  users.create_login_url("/my"))
     return greeting
 
 

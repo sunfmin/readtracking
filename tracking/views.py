@@ -11,9 +11,9 @@ def login_required(func, request=None):
     return decorate
 
 @login_required
-def index(request):
+def my(request):
     quests = Quest.all().filter("creator = ", users.get_current_user()).order("-updated_at").fetch(100)
-    return render_to_response('index.html', {"quests": quests})
+    return render_to_response('my.html', {"quests": quests})
 
 @login_required
 def ask(request):
@@ -47,6 +47,9 @@ def my_dicts_update_order(request, id=None):
             mydic.put()
     return render_to_response('dicts_update_order.html', {"my_dictionaries": Dictionary.my_dictionaries()})
 
+
+def index(request):
+    return render_to_response('index.html', {})
 
 def loader(request):
     return render_to_response('loader.js', {}, mimetype="application/javascript")

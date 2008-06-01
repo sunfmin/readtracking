@@ -3,25 +3,55 @@
 {% block content %}
 {% load helper %}
 
-<h2>My Recent Words</h2>
+<div class="help">
+    
+<h2>How to use Read Tracking</h2>
 
 <ol>
-{% for quest in quests %}
-    {% if quest.word %}
     <li>
-       <a href="{{quest.content.url}}">{{quest.word.name}}</a>
+        <h3>Drag the link to your browser bookmark toolbar, {% include "toolbar.html" %}</h3>
+        <p><img src="/static/images/add_toolbar.png"/></p>
+        <p>After you finished, The toolbar should look like this</p>
+        <p><img src="/static/images/added_toolbar.png"/></p>
     </li>
-    {% endif %}
-{% endfor %}
+    
+    <li>
+        <h3>Go to any website you like, select a word you don't know</h3>
+        <p><img src="/static/images/select_word.png"/></p>
+        <p>Click the bookmark</p>
+        <p><img src="/static/images/click_the_bookmark.png"/></p>
+        <p>You got the explanation</p>
+        <p><img src="/static/images/you_get_explanation.png"/></p>
+        <p>To check another dictionary is as easy as click a button</p>
+        <p><img src="/static/images/another_dictionary.png"/></p>
+    </li>
+    
+    <li>
+        <h3>Not good enough? click the "Add or delete buttons" to add another dictionary</h3>
+        <p>Google dictionary, check the word url after you search a word on dictionary website</p>
+        <p><img src="/static/images/add_dictionary_is_easy1.png"/></p>
+        <p>click the "Add or delete buttons" you got here. </p>
+        <p>NOTE: replace the actual word "hello" with the ${word} placeholder.</p>
+        <p><img src="/static/images/add_dictionary_is_easy2.png"/></p>
+        <p>Then you got the dictionary next time you click the "Dic" bookmark</p>
+        <p><img src="/static/images/you_got_the_dictionary.png"/></p>
+    </li>
+    
+    <li>
+        <h3>Want more?</h3>
+        <p>We keep track of all the word you checked before, So you can review it latter.</p>
+        <p><img src="/static/images/you_know_which_word_you_checked.png"/></p>
+    </li>
+    
+    <li>
+        <h3>Can't wait to try?</h3>
+        <p> <span class="important"> => </span> {% include "toolbar.html" %}</p>
+    </li>
 </ol>
-
-<a href="/dicts">My Dictionaries</a>
-
-
-<div class="toobar">
-    Put this to your browser toolbar, 
-<a href="javascript:(function(){var%20w=window,d=document,e=encodeURIComponent,url=location.href,fff=d.getElementsByTagName('body')[0],wra=window.readtracking_ask;if(url!=''&&url!='about:blank'){if(wra){fff.removeChild(wra);}var%20s=d.createElement('script');window.readtracking_ask=s;s.src='http://readtracking.appspot.com/loader.js';fff.appendChild(s);}}());">Dic</a>
 </div>
+
+
+
 
 
 {% endblock %}

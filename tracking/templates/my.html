@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+{% block content %}
+{% load helper %}
+
+<h2>My Recent Words</h2>
+
+<ol>
+{% for quest in quests %}
+    {% if quest.word %}
+    <li>
+       <a href="{{quest.content.url}}">{{quest.word.name}}</a>
+    </li>
+    {% endif %}
+{% endfor %}
+</ol>
+
+<a href="/dicts">My Dictionaries</a>
+
+<div>
+Bookmark Tool:  {% include "toolbar.html" %}
+</div>
+
+{% endblock %}

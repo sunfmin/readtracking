@@ -27,4 +27,18 @@ body {
     font-size: 12px;
 }
 
+.help p {
+    font-weight: bold;
+    color: #006600;
+}
+
+.help img {
+    border: 5px solid #BBB;
+}
+
+.important {
+    color: #990000;
+    font-weight: bold;
+}
+
 
