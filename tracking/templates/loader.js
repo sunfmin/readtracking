@@ -25,6 +25,11 @@ height = 580;
 if(w.innerHeight) {
     height = w.innerHeight - 10;
 }
+width = 800;
+if(w.innerWidth) {
+    width = w.innerWidth / 2
+}
+
 //making wraper
 wrpr=d.createElement('div');
 wrpr.style.zIndex='10000000';
@@ -32,8 +37,8 @@ wrpr.style.position='fixed';
 wrpr.style.top='0';
 wrpr.style.right='0';
 wrpr.style.lineHeight='20px';
-wrpr.style.width='600px';
-wrpr.style.height= (height + 'px');
+wrpr.style.width=(width + 'px');
+wrpr.style.height=(height + 'px');
 wrpr.style.margin="0px";
 wrpr.style.textAlign='left';
 wrpr.style.background='#f6f5ee';
@@ -105,7 +110,7 @@ ifrm=d.createElement('iframe');
 ifrm.id="readtracking_iframe_" + random_key
 ifrm.scrolling='no';
 ifrm.style.display='block';
-ifrm.style.width='600px';
+ifrm.style.width=(width - 20) + 'px';
 ifrm.style.height=(height - 20) + 'px';
 ifrm.style.borderWidth='0';
 ifrm.style.margin="0";
