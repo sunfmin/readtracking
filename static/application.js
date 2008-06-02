@@ -31,8 +31,9 @@ readtracking.loadDictionaryIframes = function(dics_json) {
     }
     
     d.current_iframe = iframes[0];
-    d.current_iframe.style.display="block";
-    
+    if(d.current_iframe){
+        d.current_iframe.style.display="block";
+    }
     for (var i=0; i < dics_json.length; i++) {
         $(buttons[i]).click(function(e){
             d.current_iframe.style.display="none";

@@ -10,14 +10,14 @@ indexes:
 # automatically uploaded to the admin console when you next deploy
 # your application using appcfg.py.
 
-# Used 88 times in query history.
+# Used 4 times in query history.
 - kind: MyDictionary
   properties:
   - name: creator
   - name: order_priority
     direction: desc
 
-# Used 19 times in query history.
+# Unused in query history -- copied from input.
 - kind: Quest
   properties:
   - name: creator
