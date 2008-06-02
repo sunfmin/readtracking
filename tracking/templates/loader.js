@@ -56,7 +56,7 @@ with (butt) {
     value='Close';
     style.clear='both';
     style.width='100px';
-    style.margin='0px';
+    style.marginRight='20px';
     style.padding='2px';
     style.color='#5f758b';
     style.fontSize='12px';
@@ -71,19 +71,11 @@ with (butt) {
 logo=d.createElement('a');
 with (logo) {
  href="http://readtracking.appspot.com";
- alt="Go to my page";
- title="Go to my page";
+ alt="ReadTracking";
+ title="ReadTracking";
+ paddingLeft="30px";
  innerHTML="ReadTracking"
  target="_top";
- style.display="block";
- style.margin="0px";
- style.marginRIght="3px";
- style.float ="right";
- style.cssFloat ="right";
- style.styleFloat ="right";
- style.width="100px";
- style.height="20px";
- style.marginRight="8px";
  style.fontSize="12px"
 }
 
