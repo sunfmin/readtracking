@@ -56,12 +56,13 @@ with (butt) {
     value='Close';
     style.clear='both';
     style.width='100px';
-    style.marginRight='20px';
     style.padding='2px';
     style.color='#5f758b';
     style.fontSize='12px';
     style.background=' #e1e1e1';
+    style.margin='0';
     style.border="0"
+    style.marginRight='20px';
     style.borderRight='1px solid #CCCCCC';
     style.borderBottom='1px solid #CCCCCC';
 }
@@ -83,7 +84,7 @@ with (logo) {
 //adding events for close button
 butt.onmouseover = function() {
 	this.style.color='#435362';
-	this.style.background='#d9d9d9';
+	this.style.background='#CCCCCC';
 };
 
 butt.onmouseout = function() {
@@ -102,7 +103,7 @@ ifrm=d.createElement('iframe');
 ifrm.id="peekla_iframe_" + random_key
 ifrm.scrolling='no';
 ifrm.style.display='block';
-ifrm.style.width=(width - 20) + 'px';
+ifrm.style.width=width + 'px';
 ifrm.style.height=(height - 40) + 'px';
 ifrm.style.borderWidth='0';
 ifrm.style.margin="0";
