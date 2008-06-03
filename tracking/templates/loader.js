@@ -1,7 +1,7 @@
 (function(){
 
 
-var loadReadTracking = function(){
+var loadPeekla = function(){
 w=window,d=document,e=encodeURIComponent,url=location.href;
 b=d.getElementsByTagName('body')[0];
 
@@ -17,8 +17,8 @@ var selectedWord = function(){
 }
 
 var ask_url = 'http://peek.la/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
-if(window.readtracking_ask_iframe_container){
-    b.removeChild(window.readtracking_ask_iframe_container);
+if(window.peekla_ask_iframe_container){
+    b.removeChild(window.peekla_ask_iframe_container);
 }
 
 height = 580;
@@ -46,7 +46,7 @@ wrpr.style.border='1px solid #CCCCCC';
 wrpr.style.borderTopWidth='1px';
 wrpr.style.borderRightWidth='1px';
 wrpr.style.fontFamily = 'Courier New';
-window.readtracking_ask_iframe_container = wrpr;
+window.peekla_ask_iframe_container = wrpr;
 
 
 //making close button
@@ -71,10 +71,10 @@ with (butt) {
 logo=d.createElement('a');
 with (logo) {
  href="http://peek.la";
- alt="ReadTracking";
- title="ReadTracking";
+ alt="peek.la";
+ title="peek.la";
  paddingLeft="30px";
- innerHTML="ReadTracking"
+ innerHTML="peek.la"
  target="_top";
  style.fontSize="12px"
 }
@@ -99,7 +99,7 @@ random_key =  (Math.random() + "").replace('.', '');
 
 //making iframe
 ifrm=d.createElement('iframe');
-ifrm.id="readtracking_iframe_" + random_key
+ifrm.id="peekla_iframe_" + random_key
 ifrm.scrolling='no';
 ifrm.style.display='block';
 ifrm.style.width=(width - 20) + 'px';
@@ -116,23 +116,23 @@ wrpr.appendChild(ifrm);
 
 // var keydown_handler = function(e){
 //     if(e.keyCode == 27){
-//         wrpr = window.readtracking_ask_iframe_container;
+//         wrpr = window.peekla_ask_iframe_container;
 //         if(!wrpr) {
 //             return;
 //         }
 //         if(wrpr.style.display == 'none') {
-//             loadReadTracking();
+//             loadPeekla();
 //         } else {
 //             b=document.getElementsByTagName('body')[0];
 //             b.removeChild(wrpr)
-//             window.readtracking_ask_iframe_container = null;
+//             window.peekla_ask_iframe_container = null;
 //         }
 //     }
 //     window.focus();
 // }
 
 
-loadReadTracking()
+loadPeekla()
 // window.onkeydown = keydown_handler
 
 

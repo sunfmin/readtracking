@@ -1,6 +1,6 @@
-var readtracking = new Object()
+var peekla = new Object()
 
-readtracking.loadDictionaryIframes = function(dics_json) {
+peekla.loadDictionaryIframes = function(dics_json) {
     d = document;
     buttons = [];
     iframes = [];
