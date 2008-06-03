@@ -6,7 +6,7 @@ def login_required(func, request=None):
     def decorate(request, *args, **kws):
         user = users.get_current_user()
         if not user:
-            html = "<a href=\"%s\" target='_blank'>Please sign in your google account to use it</a>." % users.create_login_url(request.get_full_path())
+            html = "<a href=\"%s\">Please sign in your google account to use it</a>." % users.create_login_url(request.get_full_path())
             return HttpResponse(html)
         return func(request, *args, **kws)
     return decorate

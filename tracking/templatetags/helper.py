@@ -26,7 +26,7 @@ def dictionaries_json(quest):
         except KeyError:
             if not wordname:
                 continue
-            url = url_t.substitute(word=wordname, url=quest.content.url, title=quest.content.title)
+            url = url_t.substitute(word=lower(wordname), url=quest.content.url, title=quest.content.title)
 
         result.append({'title': mydic.dictionary.title, 'url': url})
     return simplejson.dumps(result)

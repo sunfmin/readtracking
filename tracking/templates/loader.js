@@ -16,7 +16,7 @@ var selectedWord = function(){
     return txt;
 }
 
-var ask_url = 'http://readtracking.appspot.com/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
+var ask_url = 'http://peek.la/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
 if(window.readtracking_ask_iframe_container){
     b.removeChild(window.readtracking_ask_iframe_container);
 }
@@ -70,7 +70,7 @@ with (butt) {
 // making logo
 logo=d.createElement('a');
 with (logo) {
- href="http://readtracking.appspot.com";
+ href="http://peek.la";
  alt="ReadTracking";
  title="ReadTracking";
  paddingLeft="30px";
