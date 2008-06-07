@@ -1,5 +1,6 @@
 body {
     font-family: "Courier New";
+    line-height: 20px;
 /*  background: #DDD;*/
 }
 
@@ -43,6 +44,16 @@ body {
 
 iframe {
     border: 2px solid #DDD;
+}
+
+ol.recent_words li {
+    float: left;
+    margin-left: 50px;
+}
+
+.navigation {
+    margin-top: 20px;
+    text-align: right;
 }
 
 

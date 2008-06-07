@@ -3,7 +3,7 @@ from google.appengine.api import urlfetch
 from google.appengine.api import users
 
 from string import *
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class Word(db.Model):
@@ -95,12 +95,15 @@ class Quest(db.Model):
         
         return quest
 
+
 class Dictionary(db.Model):
     title = db.StringProperty()
     url_template = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
-
+    default_for_all = db.BooleanProperty()
+    
+    
     @classmethod
     def put_with_url_template(cls, url_template=None, title=None):
         url_template = rstrip(url_template, "/")
@@ -123,15 +126,14 @@ class Dictionary(db.Model):
 
 
     @classmethod
-    def my_dictionaries(cls):
-        mydics = MyDictionary.all().filter('creator =', users.get_current_user()).order("-order_priority").fetch(100)
+    def my_dictionaries(cls, initialize_my_dics=True):
+        mydics = MyDictionary.all().filter('creator =', users.get_current_user()).order("-order_priority").fetch(30)
+        if len(mydics) == 0 and initialize_my_dics:
+            dics = Dictionary.all().filter('default_for_all = ', True).fetch(30)
+            for dic in dics:
+                MyDictionary.add_my_dic(dic_id=dic.key().id())
+            mydics = Dictionary.my_dictionaries(False)
         return mydics
-
-        # alc = Dictionary(url_template="http://eow.alc.co.jp/${word}/UTF-8/",
-        #                  title="ALC")
-        # goo = Dictionary(url_template="http://dictionary.goo.ne.jp/search.php?MT=${word}&kind=all&mode=0&kwassist=0",
-        #                   title="Goo")
-        # return [goo, alc]
 
 
 class MyDictionary(db.Model):
@@ -139,6 +141,7 @@ class MyDictionary(db.Model):
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     order_priority = db.IntegerProperty()
+
 
     @classmethod
     def add_my_dic(cls, url_template=None, title=None, dic_id=None):
