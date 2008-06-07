@@ -13,7 +13,7 @@ def login_required(func, request=None):
 
 @login_required
 def myhome(request):
-    quests = Quest.all().filter("creator = ", users.get_current_user()).order("-updated_at").fetch(500)
+    quests = Quest.all().filter("creator = ", users.get_current_user()).order("-updated_at").fetch(150)
     return render_to_response('myhome.html', {"quests": quests})
 
 @login_required
