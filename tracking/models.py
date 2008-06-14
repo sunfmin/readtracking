@@ -13,6 +13,10 @@ class Word(db.Model):
 
     @classmethod
     def quest(cls, url=None, word_name=None, title=None):
+        if word_name:
+            word_name = word_name.replace("\n", " ")
+        if title:
+            title = title.replace("\n", " ")
 
         # word_name = lower(word_name)
         from_content = Content.put_with_url(url=url, title=title)
