@@ -7,27 +7,50 @@
     
 <h2>How to use peek.la</h2>
 
+<h3 class="toolbar">Drag the link to your browser bookmark toolbar, {% include "toolbar.html" %}</h3>
+
+<p>
+
+<OBJECT
+WIDTH="908" HEIGHT="679" ALIGN="">
+ <PARAM NAME="movie" VALUE="/static/firefox.swf">
+ <PARAM NAME="bgcolor" VALUE="#ffffff">
+ <EMBED src="/static/firefox.swf" quality="high" bgcolor="#ffffff" play="true" loop="false"  WIDTH="908"
+HEIGHT="679" ALIGN=""
+TYPE="application/x-shockwave-flash"
+PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer">
+</EMBED>
+</OBJECT>
+
+
+</p>
+<p>If you are using Internet Explorer, I suggest you to switch to <a href="http://getfirefox.com">Firefox</a>. </p>
+
+<script type="text/javascript" charset="utf-8">
+    var show_ie7_video = function(){
+        v = '<OBJECT WIDTH="960" HEIGHT="726" ALIGN=""><PARAM NAME="movie" VALUE="/static/ie7.swf"><PARAM NAME="bgcolor" VALUE="#ffffff"><EMBED src="/static/ie7.swf" quality="high" bgcolor="#ffffff" play="true" loop="false"  WIDTH="960" HEIGHT="726" TYPE="application/x-shockwave-flash" PLUGINSPAGE="http://www.macromedia.com/go/getflashplayer"></EMBED></OBJECT>'
+        jQuery("#ie7_video").html(v);
+    }
+</script>
+<p>If you insist, Then you need a few more step to make peek.la work in Internet Explorer 7</p>
+<a href="javascript: show_ie7_video();">Show me how to do it</a>
+
+<p id="ie7_video">
+
+
+</p>
+<p>You are using IE6? I have to say sorry. I don't have time to support IE6 yet.</p>
+
+
+
+
+
+
+<h2> More about peek.la </h2>
 <ol>
-    <li>
-        <h3>Drag the link to your browser bookmark toolbar, {% include "toolbar.html" %}</h3>
-        <p><img src="/static/images/add_toolbar.png"/></p>
-        <p>After you finished, The toolbar should look like this</p>
-        <p><img src="/static/images/added_toolbar.png"/></p>
-    </li>
     
     <li>
-        <h3>Go to any website you like, select a word you don't know</h3>
-        <p><img src="/static/images/select_word.png"/></p>
-        <p>Click the bookmark</p>
-        <p><img src="/static/images/click_the_bookmark.png"/></p>
-        <p>You got the explanation</p>
-        <p><img src="/static/images/you_get_explanation.png"/></p>
-        <p>To check another dictionary is as easy as click a button</p>
-        <p><img src="/static/images/another_dictionary.png"/></p>
-    </li>
-    
-    <li>
-        <h3>Not good enough? click the "Add or delete buttons" to add another dictionary</h3>
+        <h3>Click the "Add or delete buttons" to add another dictionary</h3>
         <p>Google dictionary, check the word url after you search a word on dictionary website</p>
         <p><img src="/static/images/add_dictionary_is_easy1.png"/></p>
         <p>click the "Add or delete buttons" you get here. </p>

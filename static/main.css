@@ -4,6 +4,12 @@ body {
 /*  background: #DDD;*/
 }
 
+.help {
+    font-family: "Georgia";
+    line-height: 20px;
+/*  background: #DDD;*/
+}
+
 .greeting {
     text-align: right;
     font-size: 12px;
@@ -29,8 +35,7 @@ body {
 }
 
 .help p {
-    font-weight: bold;
-    color: #006600;
+
 }
 
 .help img {
@@ -56,6 +61,16 @@ ol.recent_words li {
 .navigation {
     margin-top: 20px;
     text-align: right;
+}
+
+.help .toolbar {
+    border: 5px solid #006600;
+    padding: 5px;
+}
+
+.help h2 {
+    background-color: #BBB;
+    padding: 10px 5px;
 }
 
 
