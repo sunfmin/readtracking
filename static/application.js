@@ -8,18 +8,16 @@ peekla.loadDictionaryIframes = function(dics_json) {
         a = d.createElement('input');
         a.type='button';
         a.value=this.title;
-        $("body").append(a);
+        jQuery("body").append(a);
         buttons.push(a);
     });
-    $("body").append("<a href='http://peek.la/dicts' target='_blank' class='manage_buttons'>Add or delete buttons</a>");
+    jQuery("body").append("<a href='http://peek.la/dicts' target='_blank' class='manage_buttons'>Add or delete buttons</a>");
     
-    height = 500;
-    if(window.innerHeight) {
-        height = window.innerHeight - 60;
-    }
+    height = jQuery(window).height() - 60;
     
     for (var i=0; i < dics_json.length; i++) {
         ifrm=d.createElement('iframe');
+        ifrm.frameborder='0';
         ifrm.scrolling='auto';
         ifrm.style.width='100%';
         ifrm.style.height= (height + 'px');
@@ -35,7 +33,7 @@ peekla.loadDictionaryIframes = function(dics_json) {
         d.current_iframe.style.display="block";
     }
     for (var i=0; i < dics_json.length; i++) {
-        $(buttons[i]).click(function(e){
+        jQuery(buttons[i]).click(function(e){
             d.current_iframe.style.display="none";
             d.current_iframe = this.myiframe;
             d.current_iframe.style.display="block";
