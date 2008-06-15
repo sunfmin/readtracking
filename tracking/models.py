@@ -10,11 +10,12 @@ class Word(db.Model):
     name = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
-
+    
     @classmethod
     def quest(cls, url=None, word_name=None, title=None):
         if word_name:
             word_name = word_name.replace("\n", " ")
+            word_name = word_name.strip()
         if title:
             title = title.replace("\n", " ")
 
