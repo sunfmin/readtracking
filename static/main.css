@@ -1,19 +1,20 @@
 body {
     font-family: "Courier New";
-    line-height: 20px;
+    line-height: 25px;
 /*  background: #DDD;*/
+    margin-top: 0px;
+    padding-top: 0px;
 }
 
 .help {
     font-family: "Georgia";
-    line-height: 20px;
+    line-height: 25px;
 /*  background: #DDD;*/
 }
 
 .greeting {
     text-align: right;
     font-size: 12px;
-    
 }
 
 .add_dicts {
@@ -72,5 +73,8 @@ ol.recent_words li {
     background-color: #BBB;
     padding: 10px 5px;
 }
-
+.peekla_ask_f {
+  margin: 0;
+  padding: 0;
+}
 

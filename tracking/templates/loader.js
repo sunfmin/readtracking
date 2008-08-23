@@ -72,7 +72,7 @@ wrpr.style.background='#f6f5ee';
 wrpr.style.border='1px solid #CCCCCC';
 wrpr.style.borderTopWidth='1px';
 wrpr.style.borderRightWidth='1px';
-wrpr.style.fontFamily = 'Courier New';
+wrpr.style.fontFamily = 'monospace';
 window.peekla_ask_iframe_container = wrpr;
 
 
@@ -87,6 +87,7 @@ with (butt) {
     style.color='#5f758b';
     style.fontSize='12px';
     style.background=' #e1e1e1';
+    style.position='absolute';
     style.margin='0';
     style.border='0';
     style.marginRight='20px';
@@ -104,7 +105,9 @@ with (logo) {
  paddingLeft="30px";
  innerHTML="peek.la"
  target="_top";
- style.fontSize="12px"
+ style.fontSize="12px";
+ style.position="absolute";
+ style.left="120px";
 }
 
 

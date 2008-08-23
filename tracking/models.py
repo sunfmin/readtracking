@@ -20,7 +20,6 @@ class Word(db.Model):
             title = title.replace("\n", " ")
 
         # word_name = lower(word_name)
-        from_content = Content.put_with_url(url=url, title=title)
         
         if not word_name or len(strip(word_name)) == 0:
             word = None
@@ -34,9 +33,11 @@ class Word(db.Model):
                 word.put()
             else:
                 word = words[0]
-
-        quest = Quest.put_with_word_and_content(word=word, content=from_content)
-        return quest
+        from_content = None
+        if url:
+            from_content = Content.put_with_url(url=url, title=title)
+        qu = Quest.put_with_word_and_content(word=word, content=from_content)
+        return qu
 
 class Content(db.Model):
     text = db.TextProperty()

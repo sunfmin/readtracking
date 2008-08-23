@@ -21,12 +21,17 @@ def dictionaries_json(quest):
         wordname = None
         if quest.word:
             wordname = quest.word.name
+        content_url = None
+        title = None
+        if quest.content:
+            content_url = quest.content.url
+            title = quest.content.title
         try:
-            url = url_t.substitute(url=quest.content.url, title=quest.content.title)
+            url = url_t.substitute(url=content_url, title=title)
         except KeyError:
             if not wordname:
                 continue
-            url = url_t.substitute(word=lower(wordname), url=quest.content.url, title=quest.content.title)
+            url = url_t.substitute(word=lower(wordname), url=content_url, title=title)
 
         result.append({'title': mydic.dictionary.title, 'url': url})
     return simplejson.dumps(result)

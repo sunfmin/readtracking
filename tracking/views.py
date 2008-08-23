@@ -6,12 +6,13 @@ def login_required(func, request=None):
     def decorate(request, *args, **kws):
         user = users.get_current_user()
         if not user:
-            if request.GET['url']:
+            redirect_url = None
+            if request.GET.has_key('url'):
                 redirect_url = request.GET['url']
-            if not redirect_url:
+            if redirect_url == None:
                 redirect_url = request.get_full_path()
-            html = "<a href=\"%s\" target=\"_top\">Please sign in your google account to use it</a>." % users.create_login_url(redirect_url)
-            return HttpResponse(html)
+            return render_to_response('login.html', {"to_url": users.create_login_url(redirect_url)})
+            
         return func(request, *args, **kws)
     return decorate
 
@@ -22,8 +23,9 @@ def myhome(request):
 
 @login_required
 def ask(request):
-    quest = Word.quest(url=request.GET['url'], word_name=request.GET['q'], title=request.GET['title'])
-    return render_to_response('word.html', {"quest": quest, "dictionaries": Dictionary.my_dictionaries()})
+    word_name = request.GET.get('q', None)
+    quest = Word.quest(url=request.GET.get('url', None), word_name=word_name, title=request.GET.get('title', None))
+    return render_to_response('word.html', {"quest": quest, "word_name": word_name, "dictionaries": Dictionary.my_dictionaries()})
 
 @login_required
 def dicts(request):
