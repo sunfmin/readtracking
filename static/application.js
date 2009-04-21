@@ -11,7 +11,7 @@ peekla.loadDictionaryIframes = function(dics_json) {
         jQuery("body").append(a);
         buttons.push(a);
     });
-    jQuery("body").append("<a href='http://peek.la/dicts' target='_blank' class='manage_buttons'>Add or delete buttons</a>");
+    jQuery("body").append("<a href='http://readtracking.appspot.com/dicts' target='_blank' class='manage_buttons'>Add or delete buttons</a>");
     
     height = jQuery(window).height() - 60;
     

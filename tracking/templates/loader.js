@@ -49,7 +49,7 @@ var selectedWord = function(){
     return txt;
 }
 
-var ask_url = 'http://peek.la/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
+var ask_url = 'http://readtracking.appspot.com/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
 if(window.peekla_ask_iframe_container){
     b.removeChild(window.peekla_ask_iframe_container);
 }
@@ -99,11 +99,11 @@ with (butt) {
 // making logo
 logo=d.createElement('a');
 with (logo) {
- href="http://peek.la";
- alt="peek.la";
- title="peek.la";
+ href="http://readtracking.appspot.com";
+ alt="readtracking.appspot.com";
+ title="readtracking.appspot.com";
  paddingLeft="30px";
- innerHTML="peek.la"
+ innerHTML="readtracking.appspot.com"
  target="_top";
  style.fontSize="12px";
  style.position="absolute";
