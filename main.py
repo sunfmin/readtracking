@@ -88,7 +88,8 @@ class Index(BaseRequestHandler):
 
 class Loader(BaseRequestHandler):
     def get(self):
-        self.render('loader.js', {}, mimetype="application/javascript")
+        self.response.headers['Content-Type'] = 'text/javascript'
+        self.render('loader.js', {})
 
 application = webapp.WSGIApplication([
     ('/ask', Ask),
