@@ -1,0 +1,24 @@
+{% extends "main.html" %}
+
+
+
+{% block content %}
+
+<form class="peekla_ask_f" name="f" action="/ask">
+<input title="Search" size="55" id="peekla_q" name="q" value="{{word_name}}" maxlength="2048"/>
+<input type="submit" value="Go" name="btnG"/>
+</form>
+
+{% if quest %}
+
+<script type="text/javascript" charset="utf-8">
+$(document).ready(function(){
+    peekla.loadDictionaryIframes({{quest|dictionaries_json}});
+})
+</script>
+
+{% else %}
+You have to select something to search.
+{% endif %}
+
+{% endblock %}
