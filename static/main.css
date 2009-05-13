@@ -1,9 +1,10 @@
 body {
-    font-family: "Courier New";
     line-height: 25px;
 /*  background: #DDD;*/
     margin-top: 0px;
     padding-top: 0px;
+    font-family: "Monaco","Courier New",monospace;
+    font-size: 14px;
 }
 
 .help {
@@ -54,11 +55,13 @@ iframe {
 
 ol.recent_words li {
     float: left;
-    margin-left: 20px;
-    margin-right: 20px;
+    min-width: 200px;
     list-style-position: inside;
 }
-
+ol.recent_words li a {
+  font-size: 16px;
+  text-decoration: none;
+}
 .navigation {
     margin-top: 20px;
     text-align: right;
