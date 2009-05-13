@@ -1,4 +1,5 @@
 import os
+from datetime import datetime
 
 from google.appengine.api import users
 from google.appengine.ext import db
@@ -38,6 +39,17 @@ class MyHome(BaseRequestHandler):
     def get(self):
         quests = Quest.all().filter("creator = ", users.get_current_user()).order("-updated_at").fetch(100)
         self.render('myhome.html', {"quests": quests})
+
+class MyHomeMore(BaseRequestHandler):
+    @login_required
+    def get(self, before=None):
+        before_time = datetime.strptime(before, "%Y%m%d%H%M%S")
+        q = Quest.all()
+        q.filter("creator = ", users.get_current_user())
+        q.filter("updated_at < ", before_time)
+        q.order("-updated_at")
+        quests = q.fetch(100)
+        self.render('quests.html', {"quests": quests})
 
 class Ask(BaseRequestHandler):
     @login_required
@@ -94,6 +106,7 @@ class Loader(BaseRequestHandler):
 application = webapp.WSGIApplication([
     ('/ask', Ask),
     ('/myhome', MyHome),
+    ('/myhome/before/(\d+)', MyHomeMore),
     ('/dicts/update_order/(.*)', MyDictsUpdateOrder),
     ('/dicts/update_order', MyDictsUpdateOrder),
     ('/dicts', Dicts),

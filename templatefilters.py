@@ -44,8 +44,12 @@ def greeting(any):
                   users.create_login_url("/myhome"))
     return greeting
 
+def last_updated_at(quests):
+    return quests[-1].updated_at.strftime("%Y%m%d%H%M%S")
+
 register = template.create_template_register()
 register.filter(dictionaries_json)
 register.filter(greeting)
 register.filter(url_id)
 register.filter(show_word)
+register.filter(last_updated_at)

@@ -8,13 +8,6 @@
 <h2>My Recent Words</h2>
 
 <ol class="recent_words">
-{% for quest in quests %}
-    {% if quest.word %}
-    <li>
-       <a href="{{quest.content.url}}">{{quest.word.name}}</a>
-    </li>
-    {% endif %}
-{% endfor %}
+  {% include "quests.html" %}
 </ol>
-
 {% endblock %}

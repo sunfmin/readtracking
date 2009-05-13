@@ -1,0 +1,20 @@
+{% for quest in quests %}
+    {% if quest.word %}
+    <li>
+       <a href="{{quest.content.url}}">{{quest.word.name}}</a>
+    </li>
+    {% endif %}
+{% endfor %}
+{% if quests %}
+<div class="my_home_more">
+  <a href="/myhome/before/{{quests|last_updated_at}}" class="remote-link-myhome-more">»</a>
+</div>
+{% endif %}
+<script type="text/javascript" charset="utf-8">
+  $(".remote-link-myhome-more").click(function(evt){
+    $.get(this.href, function(data){
+      $(".my_home_more").replaceWith(data)
+    })
+    return false
+  })
+</script>
