@@ -17,7 +17,7 @@ indexes:
   - name: order_priority
     direction: desc
 
-# Used 41 times in query history.
+# Used 50 times in query history.
 - kind: Quest
   properties:
   - name: creator
