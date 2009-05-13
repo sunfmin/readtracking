@@ -10,7 +10,7 @@ class Word(db.Model):
     name = db.StringProperty()
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
-    
+
     @classmethod
     def quest(cls, url=None, word_name=None, title=None):
         if word_name:
@@ -20,7 +20,7 @@ class Word(db.Model):
             title = title.replace("\n", " ")
 
         # word_name = lower(word_name)
-        
+
         if not word_name or len(strip(word_name)) == 0:
             word = None
         else:
@@ -72,7 +72,9 @@ class Quest(db.Model):
     created_at = db.DateTimeProperty(auto_now_add=True)
     updated_at = db.DateTimeProperty(auto_now_add=True)
     search_count = db.IntegerProperty()
-    
+    word_name = db.StringProperty()
+    content_url = db.StringProperty()
+
     @classmethod
     def put_with_word_and_content(cls, word=None, content=None):
         creator = users.get_current_user()
@@ -91,16 +93,27 @@ class Quest(db.Model):
             quest.put()
         else:
             quest = quests[0]
-        
+
         quest.updated_at = datetime.now()
         if not quest.search_count:
             quest.search_count = 1
         else:
             quest.search_count = quest.search_count + 1
         quest.put()
-        
+
         return quest
 
+    def get_content_url(self):
+        if not self.content_url:
+            self.content_url = self.content.url
+            self.put()
+        return self.content_url
+
+    def get_word_name(self):
+        if not self.word_name:
+            self.word_name = self.word.name
+            self.put()
+        return self.word_name
 
 class Dictionary(db.Model):
     title = db.StringProperty()
@@ -108,8 +121,8 @@ class Dictionary(db.Model):
     creator = db.UserProperty()
     created_at = db.DateTimeProperty(auto_now_add=True)
     default_for_all = db.BooleanProperty()
-    
-    
+
+
     @classmethod
     def put_with_url_template(cls, url_template=None, title=None):
         url_template = rstrip(url_template, "/")
@@ -125,7 +138,7 @@ class Dictionary(db.Model):
         else:
             dictionary = dicts[0]
         return dictionary
-    
+
     @classmethod
     def public_dictionaries(self):
         return Dictionary.all().fetch(100)
@@ -165,7 +178,7 @@ class MyDictionary(db.Model):
         mydicsq.filter('dictionary = ', dic)
         mydicsq.filter('creator = ', creator)
         mydics = mydicsq.fetch(1)
-        
+
         if len(mydics) == 0:
             mydic = MyDictionary(
                 dictionary = dic,
@@ -179,13 +192,13 @@ class MyDictionary(db.Model):
 
 
 
-# 
+#
 # from urlparse import urlparse
 # # from BeautifulSoup import BeautifulSoup, BeautifulStoneSoup
 # import re
-# 
-#   
-# 
+#
+#
+#
 # class Stripper(db.Model):
 #     domain = db.StringProperty()
 #     url_path_regexp = db.StringProperty()
@@ -198,10 +211,10 @@ class MyDictionary(db.Model):
 #         url_o = urlparse(url)
 #         domain = url_o.scheme + "://" + url_o.netloc
 #         path = replace(url, domain, "")
-#         
+#
 #         fetched_content = urlfetch.fetch(url).content.decode('utf-8')
 #         # clean_xhtml = BeautifulStoneSoup(fetched_content).prettify()
-#         
+#
 #         strippers = Stripper.all().filter('domain = ', domain).order("-priority").fetch(100)
 #         for stripper in strippers:
 #             if re.compile(stripper.url_path_regexp).match(path):

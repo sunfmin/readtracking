@@ -1,7 +1,8 @@
 {% for quest in quests %}
-    {% if quest.word %}
-    <li>
-       <a href="{{quest.content.url}}">{{quest.word.name}}</a>
+    {% if quest.get_word_name %}
+    <li class="list_word_name">
+       <a href="{{quest.get_content_url}}">{{quest.get_word_name}}</a>
+       <a href="#" class="quickview" ref="{{quest.get_word_name}}">»</a>
     </li>
     {% endif %}
 {% endfor %}
@@ -17,4 +18,21 @@
     })
     return false
   })
+  $(".list_word_name a.quickview:not(.bounded)").mouseenter(function(ent){
+    // this.timerout_handler = setTimeout(function(){
+      ifrm=document.createElement('iframe');
+      ifrm.frameborder='0';
+      ifrm.scrolling='auto';
+      ifrm.style.width='100%';
+      ifrm.style.height= ($(window).height() - 200) + 'px';
+      ifrm.src='{{None|head_dictionary_template}}'.replace('${word}', $(this).attr('ref'))
+      $('.quick_dict_view').html(ifrm)
+      $('.quick_dict_view').removeClass('hidden')
+      $('.recent_words').css('width', '56%')
+    // }, 500)
+    $(this).addClass('bounded')
+  })
+  // $(".list_word_name a").mouseleave(function(ent){
+  //   clearTimeout(this.timerout_handler)
+  // })
 </script>

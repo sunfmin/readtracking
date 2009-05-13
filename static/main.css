@@ -85,5 +85,14 @@ ol.recent_words li a {
   clear: both;
   text-align: center;
 }
+.quick_dict_view {
+  float: right;
+  width: 40%;
+  margin-right: 20px;
+  height: 500px;
+}
 
+.hidden {
+  display: none;
+}
 

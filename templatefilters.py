@@ -34,6 +34,9 @@ def dictionaries_json(quest):
         result.append({'title': mydic.dictionary.title, 'url': url})
     return simplejson.dumps(result)
 
+def head_dictionary_template(any):
+    return Dictionary.my_dictionaries()[0].dictionary.url_template
+
 def greeting(any):
     user = users.get_current_user()
     if user:
@@ -53,3 +56,4 @@ register.filter(greeting)
 register.filter(url_id)
 register.filter(show_word)
 register.filter(last_updated_at)
+register.filter(head_dictionary_template)
