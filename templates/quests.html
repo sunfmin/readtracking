@@ -13,7 +13,9 @@
 {% endif %}
 <script type="text/javascript" charset="utf-8">
   $(".remote-link-myhome-more").click(function(evt){
-    $.get(this.href, function(data){
+    link_href = this.href
+    $(this).replaceWith("<img src='/static/images/ajax_loader.gif'/>")
+    $.get(link_href, function(data){
       $(".my_home_more").replaceWith(data)
     })
     return false
