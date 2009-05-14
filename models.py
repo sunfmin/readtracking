@@ -104,13 +104,13 @@ class Quest(db.Model):
         return quest
 
     def get_content_url(self):
-        if not self.content_url:
+        if (not self.content_url) and self.content and self.content.url:
             self.content_url = self.content.url
             self.put()
         return self.content_url
 
     def get_word_name(self):
-        if not self.word_name:
+        if (not self.word_name) and self.word and self.word.name:
             self.word_name = self.word.name
             self.put()
         return self.word_name
