@@ -35,7 +35,10 @@ def dictionaries_json(quest):
     return simplejson.dumps(result)
 
 def head_dictionary_template(any):
-    return Dictionary.my_dictionaries()[0].dictionary.url_template
+    dicts = Dictionary.my_dictionaries()
+    if dicts:
+        return dicts[0].dictionary.url_template
+    return None
 
 def greeting(any):
     user = users.get_current_user()

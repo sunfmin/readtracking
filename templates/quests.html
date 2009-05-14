@@ -18,8 +18,7 @@
     })
     return false
   })
-  $(".list_word_name a.quickview:not(.bounded)").mouseenter(function(ent){
-    // this.timerout_handler = setTimeout(function(){
+  $(".list_word_name a.quickview:not(.bounded)").click(function(ent){
       ifrm=document.createElement('iframe');
       ifrm.frameborder='0';
       ifrm.scrolling='auto';
@@ -29,10 +28,7 @@
       $('.quick_dict_view').html(ifrm)
       $('.quick_dict_view').removeClass('hidden')
       $('.recent_words').css('width', '56%')
-    // }, 500)
-    $(this).addClass('bounded')
+      $(this).addClass('bounded')
+      return false
   })
-  // $(".list_word_name a").mouseleave(function(ent){
-  //   clearTimeout(this.timerout_handler)
-  // })
 </script>
