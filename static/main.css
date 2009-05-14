@@ -86,10 +86,12 @@ ol.recent_words li a {
   text-align: center;
 }
 .quick_dict_view {
-  float: right;
   width: 40%;
   margin-right: 20px;
   height: 500px;
+  position: absolute;
+  right: 0;
+  top: 80px;
 }
 
 .hidden {

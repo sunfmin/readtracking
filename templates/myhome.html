@@ -11,9 +11,9 @@
 <script type="text/javascript" charset="utf-8">
 $(document).ready(function(){
   $(window).scroll(function(){
-    $('.quick_dict_view').animate({top: 80 + $(document).scrollTop() + 'px'}, {duration:500, queue:false});
+    $('.quick_dict_view').animate({top: (80 + $(document).scrollTop() + 'px')}, {duration:500, queue:false});
   });
-}
+});
 </script>
 <ol class="recent_words">
   {% include "quests.html" %}

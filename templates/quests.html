@@ -1,8 +1,8 @@
 {% for quest in quests %}
     {% if quest.get_word_name %}
     <li class="list_word_name">
-       <a href="{{quest.get_content_url}}">{{quest.get_word_name}}</a>
-       <a href="#" class="quickview" ref="{{quest.get_word_name}}">»</a>
+       <a href="#" class="quickview" ref="{{quest.get_word_name}}">{{quest.get_word_name}}</a>
+       <a href="{{quest.get_content_url}}" target="_blank">^</a>
     </li>
     {% endif %}
 {% endfor %}
@@ -23,7 +23,7 @@
       ifrm.frameborder='0';
       ifrm.scrolling='auto';
       ifrm.style.width='100%';
-      ifrm.style.height= ($(window).height() - 200) + 'px';
+      ifrm.style.height= ($(window).height() - 120) + 'px';
       ifrm.src='{{None|head_dictionary_template}}'.replace('${word}', $(this).attr('ref'))
       $('.quick_dict_view').html(ifrm)
       $('.quick_dict_view').removeClass('hidden')
