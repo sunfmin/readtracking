@@ -26,14 +26,28 @@ var loadPeekla = function(){
 w=window,d=document,e=encodeURIComponent,url=location.href;
 b=d.getElementsByTagName('body')[0];
 
+var selectedWordInDoc = function(win, doc) {
+    if (doc.getSelection)
+        txt = doc.getSelection();
+    else if (win.getSelection)
+        txt = win.getSelection();
+    else if (doc.selection)
+        txt = doc.selection.createRange().text;
+    return txt;
+}
 var selectedWord = function(){
-    var txt='';
-    if (w.getSelection)
-    	txt = w.getSelection();
-    else if (d.getSelection)
-    	txt = d.getSelection();
-    else if (d.selection)
-    	txt = d.selection.createRange().text;
+    var txt=selectedWordInDoc(w, d);
+    if (txt.length == 0) {
+        var iframes = jQuery('iframe').get()
+        for (var i=0; i < iframes.length; i++) {
+            if(iframes[i].contentWindow && iframes[i].contentWindow.document ) {
+                txt = selectedWordInDoc(iframes[i].contentWindow, iframes[i].contentWindow.document)
+                if(txt.length > 0) {
+                    break;
+                }
+            }
+        }
+    }
     return txt;
 }
 
