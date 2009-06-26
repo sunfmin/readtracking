@@ -20,134 +20,131 @@
 
 
 (function(){
+    w=window,d=document,e=encodeURIComponent,url=location.href;
+    b=d.getElementsByTagName('body')[0];
 
-
-var loadPeekla = function(){
-w=window,d=document,e=encodeURIComponent,url=location.href;
-b=d.getElementsByTagName('body')[0];
-
-var selectedWordInDoc = function(win, doc) {
-    if (doc.getSelection)
-        txt = doc.getSelection();
-    else if (win.getSelection)
-        txt = win.getSelection();
-    else if (doc.selection)
-        txt = doc.selection.createRange().text;
-    return txt;
-}
-var selectedWord = function(){
-    var txt=selectedWordInDoc(w, d);
-    if (txt.length == 0) {
-        var iframes = jQuery('iframe').get()
-        for (var i=0; i < iframes.length; i++) {
-            if(iframes[i].contentWindow && iframes[i].contentWindow.document ) {
-                txt = selectedWordInDoc(iframes[i].contentWindow, iframes[i].contentWindow.document)
-                if(txt.length > 0) {
-                    break;
+    var selectedWord = function(){
+        var selectedWordInDoc = function(win, doc) {
+            if (doc.getSelection){
+                txt = doc.getSelection();
+            } else if (win.getSelection){
+                txt = win.getSelection();
+            } else if (doc.selection){
+                txt = doc.selection.createRange().text;
+            }
+            return txt;
+        }
+        var txt=selectedWordInDoc(w, d);
+        if (txt.length == 0) {
+            var iframes = jQuery('iframe').get();
+            for (var i=0; i < iframes.length; i++) {
+                if(iframes[i].contentWindow && iframes[i].contentWindow.document ) {
+                    txt = selectedWordInDoc(iframes[i].contentWindow, iframes[i].contentWindow.document);
+                    if(txt.length > 0) {
+                        break;
+                    }
                 }
             }
         }
+        return txt;
     }
-    return txt;
-}
 
-var ask_url = 'http://readtracking.appspot.com/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
-if(window.peekla_ask_iframe_container){
-    b.removeChild(window.peekla_ask_iframe_container);
-}
+    var ask_url = 'http://readtracking.appspot.com/ask?q='+e(selectedWord())+'&url='+e(url)+'&title='+e(d.title);
+    if(window.peekla_new_window) {
+        window.open(ask_url,'peekla2','location=yes,links=no,scrollbars=no,toolbar=no,width=550,height=550');
+    }else{
+        if(window.peekla_ask_iframe_container){
+            b.removeChild(window.peekla_ask_iframe_container);
+        }
 
-height = jQuery(window).height() - 10;
-width = jQuery(window).width() / 2;
+        height = jQuery(window).height() - 10;
+        width = jQuery(window).width() / 2;
 
-//making wraper
-wrpr=d.createElement('div');
-wrpr.style.zIndex='10000000';
-wrpr.style.position='fixed';
-wrpr.style.top='0';
-wrpr.style.right='0';
-wrpr.style.lineHeight='20px';
-wrpr.style.width=(width + 'px');
-wrpr.style.height=(height + 'px');
-wrpr.style.margin="0px";
-wrpr.style.textAlign='left';
-wrpr.style.background='#f6f5ee';
-wrpr.style.border='1px solid #CCCCCC';
-wrpr.style.borderTopWidth='1px';
-wrpr.style.borderRightWidth='1px';
-wrpr.style.fontFamily = 'monospace';
-window.peekla_ask_iframe_container = wrpr;
-
-
-//making close button
-butt=d.createElement('input');
-with (butt) {
-    type='button';
-    value='Close';
-    style.clear='both';
-    style.width='100px';
-    style.padding='2px';
-    style.color='#5f758b';
-    style.fontSize='12px';
-    style.background=' #e1e1e1';
-    style.position='absolute';
-    style.margin='0';
-    style.border='0';
-    style.marginRight='20px';
-    style.borderRight='1px solid #CCCCCC';
-    style.borderBottom='1px solid #CCCCCC';
-}
+        //making wraper
+        wrpr=d.createElement('div');
+        wrpr.style.zIndex='10000000';
+        wrpr.style.position='fixed';
+        wrpr.style.top='0';
+        wrpr.style.right='0';
+        wrpr.style.lineHeight='20px';
+        wrpr.style.width=(width + 'px');
+        wrpr.style.height=(height + 'px');
+        wrpr.style.margin="0px";
+        wrpr.style.textAlign='left';
+        wrpr.style.background='#f6f5ee';
+        wrpr.style.border='1px solid #CCCCCC';
+        wrpr.style.borderTopWidth='1px';
+        wrpr.style.borderRightWidth='1px';
+        wrpr.style.fontFamily = 'monospace';
+        window.peekla_ask_iframe_container = wrpr;
 
 
-// making logo
-logo=d.createElement('a');
-with (logo) {
- href="http://readtracking.appspot.com";
- alt="readtracking.appspot.com";
- title="readtracking.appspot.com";
- paddingLeft="30px";
- innerHTML="readtracking.appspot.com"
- target="_top";
- style.fontSize="12px";
- style.position="absolute";
- style.left="120px";
-}
+        //making close button
+        butt=d.createElement('input');
+        with (butt) {
+            type='button';
+            value='Close';
+            style.clear='both';
+            style.width='100px';
+            style.padding='2px';
+            style.color='#5f758b';
+            style.fontSize='12px';
+            style.background=' #e1e1e1';
+            style.position='absolute';
+            style.margin='0';
+            style.border='0';
+            style.marginRight='20px';
+            style.borderRight='1px solid #CCCCCC';
+            style.borderBottom='1px solid #CCCCCC';
+        }
 
 
-//adding events for close button
-butt.onmouseover = function() {
-	this.style.color='#435362';
-	this.style.background='#CCCCCC';
-};
+        // making logo
+        logo=d.createElement('a');
+        with (logo) {
+         href="http://readtracking.appspot.com";
+         alt="readtracking.appspot.com";
+         title="readtracking.appspot.com";
+         paddingLeft="30px";
+         innerHTML="readtracking.appspot.com"
+         target="_top";
+         style.fontSize="12px";
+         style.position="absolute";
+         style.left="120px";
+        }
 
-butt.onmouseout = function() {
-	this.style.color='#5f758b';
-	this.style.background='#e1e1e1';
-};
 
-butt.onclick=function() {
-	wrpr.style.display = 'none';
-};
+        //adding events for close button
+        butt.onmouseover = function() {
+            this.style.color='#435362';
+            this.style.background='#CCCCCC';
+        };
 
-random_key =  (Math.random() + "").replace('.', '');
+        butt.onmouseout = function() {
+            this.style.color='#5f758b';
+            this.style.background='#e1e1e1';
+        };
 
-//making iframe
-ifrm=d.createElement('iframe');
-ifrm.id="peekla_iframe_" + random_key
-ifrm.scrolling='no';
-ifrm.style.display='block';
-ifrm.style.width=width + 'px';
-ifrm.style.height=(height - 40) + 'px';
-ifrm.style.border='none';
-ifrm.style.margin="0";
-ifrm.src=ask_url;
+        butt.onclick=function() {
+            wrpr.style.display = 'none';
+        };
 
-b.appendChild(wrpr);
-wrpr.appendChild(butt);
-wrpr.appendChild(logo);
-wrpr.appendChild(ifrm);
-}
+        random_key =  (Math.random() + "").replace('.', '');
 
-loadPeekla()
+        //making iframe
+        ifrm=d.createElement('iframe');
+        ifrm.id="peekla_iframe_" + random_key
+        ifrm.scrolling='no';
+        ifrm.style.display='block';
+        ifrm.style.width=width + 'px';
+        ifrm.style.height=(height - 40) + 'px';
+        ifrm.style.border='none';
+        ifrm.style.margin="0";
+        ifrm.src=ask_url;
 
+        b.appendChild(wrpr);
+        wrpr.appendChild(butt);
+        wrpr.appendChild(logo);
+        wrpr.appendChild(ifrm);
+    }
 })();
-
