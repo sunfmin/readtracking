@@ -2,7 +2,9 @@
     {% if quest.get_word_name %}
     <li class="list_word_name">
        <a href="#" class="quickview" ref="{{quest.get_word_name}}">{{quest.get_word_name}}</a>
+       {% if quest.get_content_url %}
        <a href="{{quest.get_content_url}}" target="_blank">^</a>
+       {% endif %}
     </li>
     {% endif %}
 {% endfor %}
